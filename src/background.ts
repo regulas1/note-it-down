@@ -1,6 +1,6 @@
-function polling() {
-  // console.log("polling");
-  setTimeout(polling, 1000 * 30);
-}
+const color = '#3aa757';
 
-polling();
+chrome.runtime.onInstalled.addListener(() => { 
+  chrome.storage.sync.set({ color });
+  console.log('Color set to: ', color);
+});

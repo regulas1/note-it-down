@@ -1,50 +1,35 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import './styles/popup.css'
 
 const Popup = () => {
-  const [count, setCount] = useState(0);
-  const [currentURL, setCurrentURL] = useState<string>();
+
+  const [bgColor, setBgColor] = useState('');
 
   useEffect(() => {
-    chrome.action.setBadgeText({ text: count.toString() });
-  }, [count]);
-
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      setCurrentURL(tabs[0].url);
-    });
+    chrome.storage.sync.get("color", ({ color }) => {
+      setBgColor(color);
+    })
   }, []);
 
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
+  const changeBgColor = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id ? tab.id : -1 },
+      func: setPageBgColor
     });
   };
 
+  const setPageBgColor = () => {
+    chrome.storage.sync.get("color", ({ color }) => {
+      document.body.style.backgroundColor = color;
+    })
+  }
+
   return (
     <>
-      <ul style={{ minWidth: "700px" }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
-      </ul>
-      <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
-      >
-        count up
-      </button>
-      <button onClick={changeBackground}>change background</button>
+      <button style={{backgroundColor: bgColor}} id="changeColor" onClick={changeBgColor}></button>
     </>
   );
 };
