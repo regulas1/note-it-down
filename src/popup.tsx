@@ -12,24 +12,31 @@ const Popup = () => {
     })
   }, []);
 
-  const changeBgColor = async () => {
+  const executeBlurAllButPlayer = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
     chrome.scripting.executeScript({
       target: { tabId: tab.id ? tab.id : -1 },
-      func: setPageBgColor
+      func: blurAllButPlayer
     });
   };
 
-  const setPageBgColor = () => {
-    chrome.storage.sync.get("color", ({ color }) => {
-      document.body.style.backgroundColor = color;
-    })
+  const blurAllButPlayer = () => {
+    const comments = document.querySelector<HTMLElement>("#comments");
+    const secondary = document.querySelector<HTMLElement>("#secondary"); 
+    const primaryInfoRenderer = document.querySelector<HTMLElement>("ytd-video-secondary-info-renderer");
+    const secondaryInfoRenderer = document.querySelector<HTMLElement>("ytd-video-primary-info-renderer");
+    if (comments && secondary && primaryInfoRenderer && secondaryInfoRenderer) {
+      comments.style.filter = "blur(3px)";
+      secondary.style.filter = "blur(3px)";
+      primaryInfoRenderer.style.filter = "blur(3px)";
+      secondaryInfoRenderer.style.filter = "blur(3px)";
+    }
   }
 
   return (
     <>
-      <button style={{backgroundColor: bgColor}} id="changeColor" onClick={changeBgColor}></button>
+      <button style={{backgroundColor: bgColor}} id="changeColor" onClick={executeBlurAllButPlayer}></button>
     </>
   );
 };
