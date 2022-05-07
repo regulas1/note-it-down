@@ -2,7 +2,8 @@ import { nanoid } from "nanoid";
 
 export class Notepad {
    private notepadElement;
-   private notepadId = nanoid();
+   // private notepadId = nanoid();
+   private notepadId = "notepad";
 
    constructor() {
       this.notepadElement = document.createElement("div");

@@ -5,7 +5,7 @@ export class BlurHelper {
 
    constructor(blurValue: string) {
       this.blurValue = blurValue;
-      this.initialisePage();
+      // this.initialisePage();
    }
 
    private initialisePage() {
@@ -17,25 +17,45 @@ export class BlurHelper {
    }
 
    private blurBody() {
-      const body = document.querySelector<HTMLElement>(this.toBlurSelector);
-      if (body) {
-         body.style.filter = this.blurValue;
-      }
+      // const body = document.querySelector<HTMLElement>(this.toBlurSelector);
+      // const body = document.querySelector<HTMLElement>("body > *");
+      // if (body) {
+      //    body.style.filter = this.blurValue;
+      // }
+      const style = `
+         body > *:not(#notepad) {
+            filter: blur(3px);
+         }
+      `;
+
+      const stylesheet = document.createElement("style");
+      stylesheet.setAttribute("id", "blurStyle");
+      stylesheet.innerText = style;
+      document.head.appendChild(stylesheet);
    }
 
    private unBlurBody() {
-      const body = document.querySelector<HTMLElement>(this.toBlurSelector);
-      if (body) {
-         body.style.filter = "";
+      // const body = document.querySelector<HTMLElement>("body > *");
+      // if (body) {
+      //    body.style.filter = "";
+      // }
+      const stylesheet = document.getElementById("blurStyle");
+      if (stylesheet) {
+         stylesheet.innerText = "";
       }
    }
 
    private isBodyBlur() {
-      const body = document.querySelector<HTMLElement>(this.toBlurSelector);
-      if (body?.style.filter === this.blurValue) {
-         return true;
+      // const body = document.querySelector<HTMLElement>("body > *");
+      // if (body?.style.filter === this.blurValue) {
+      //    return true;
+      // }
+      // return false;
+      const stylesheet = document.getElementById("blurStyle");
+      if (stylesheet?.innerText === "") {
+         return false;
       }
-      return false;
+      return true;
    }
 
    public toggleBlur() {
