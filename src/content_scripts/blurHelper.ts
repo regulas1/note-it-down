@@ -1,19 +1,17 @@
 export class BlurHelper {
-   private toBlurDivId = "toBlur";
    private style = "";
    private isBlurDataset = "true";
    private isNotBlurDataset = "false";
-   private toBlurSelector = `#${this.toBlurDivId}`;
 
-   constructor(blurValue: string) {
+   constructor(blurValue: number, notepadId: string) {
       this.style = `
-         body > *:not(#notepad) {
-            filter: ${blurValue};
+         body > *:not(#${notepadId}) {
+            filter: blur(${blurValue}px);
          }
       `; 
    }
   
-   private blurBody() {
+   public blurBody() {
       let stylesheet = document.getElementById("blurStyle");
       if (!stylesheet) {
          stylesheet = document.createElement("style");
@@ -24,7 +22,7 @@ export class BlurHelper {
       stylesheet.dataset.isBlur = this.isBlurDataset;
    }
 
-   private unBlurBody() {
+   public unBlurBody() {
       const stylesheet = document.getElementById("blurStyle");
       if (stylesheet) {
          stylesheet.innerText = "";
@@ -32,7 +30,7 @@ export class BlurHelper {
       }
    }
 
-   private isBodyBlur() {
+   public isBodyBlur() {
       const stylesheet = document.getElementById("blurStyle");
       console.log(stylesheet?.dataset.isBlur)
       if (stylesheet?.dataset.isBlur === this.isBlurDataset) {
