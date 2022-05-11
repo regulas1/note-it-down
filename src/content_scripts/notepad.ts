@@ -1,10 +1,10 @@
 import { nanoid } from "nanoid";
-import { BlurHelper } from "./blurHelper";
+import { blurBodyExceptNotepad, unBlurBody } from "./blurHelpers";
 
 export class Notepad {
    private notepadElement;
    private notepadId = nanoid();
-   private blurHelper = new BlurHelper(8, this.notepadId);
+   private blurValue = 8;
 
    constructor() {
       this.notepadElement = document.createElement("textarea");
@@ -31,10 +31,10 @@ export class Notepad {
 	public toggleNotepad() {
 		const notepadElement = document.getElementById(this.notepadId);
 		if (notepadElement) {
-         this.blurHelper.unBlurBody();
+         unBlurBody();
 			notepadElement.remove();
-		} else {
-         this.blurHelper.blurBody();
+      } else {
+         blurBodyExceptNotepad(this.blurValue, this.notepadId);
 			this.renderNotepad();
 		}
 	}
