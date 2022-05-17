@@ -1,13 +1,14 @@
+import { nanoid } from "nanoid";
 import { resposne } from "../types/message";
-import { Notepad } from "./notepad";
+import { toggleNotepad } from "./notepad";
 
-const notepad = new Notepad();
+const notepadId = nanoid();
 
 type sendResponseType = (response: resposne) => void;
 
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse: sendResponseType) => {
 		if (request.command === "blurBody") {
-			notepad.toggleNotepad();
+			toggleNotepad(notepadId);
 			sendResponse({code: 200});
 		}
 		return true;
