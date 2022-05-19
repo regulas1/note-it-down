@@ -3,14 +3,27 @@ import ReactDOM from "react-dom";
 import Markdown from "markdown-to-jsx";
 import { blurBodyExceptNotepad, unBlurBody } from "./blurHelpers";
 
-interface notepadProps {
-   renderMarkdown: boolean
+interface NotepadSwitchProps {
+   setRenderMarkdown: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Notepad = ({renderMarkdown}: notepadProps) => {
-   const [notes, setNotes] = useState("");
+const NotepadSwitch = ({setRenderMarkdown}:NotepadSwitchProps) => {
+   const test = () => {
+      setRenderMarkdown((prevValue) => !prevValue)
+   }
 
-   const style: React.CSSProperties = {
+   return (
+      <div>
+         <button onClick={test}>Hello</button>
+      </div>
+   )
+}
+
+const Notepad = () => {
+   const [notes, setNotes] = useState("");
+   const [renderMarkdown, setRenderMarkdown] = useState(false);
+
+   const containerStyle: React.CSSProperties = {
       position: "fixed",
       top: "50%",
       left: "50%",
@@ -25,18 +38,30 @@ const Notepad = ({renderMarkdown}: notepadProps) => {
       border: "none",
       outline: "none",
       overflow: "auto",
+      display: "flex",
+      flexDirection: "column",
+      gap: "5px"
    };
 
+   const textareaStyle: React.CSSProperties = {
+      height: "100%",
+      width: "100%",
+      background: "inherit",
+      color: "inherit",
+      border: "none",
+      outline: "none"
+   }
+
    const processNotes: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-      const markdownNotes = event.target.value;
-      setNotes(markdownNotes);
+      const notes = event.target.value;
+      setNotes(notes);
    };
 
    if (renderMarkdown) {
-      return <div style={style}> <Markdown>{notes}</Markdown> </div>
+      return <div style={containerStyle}> <NotepadSwitch setRenderMarkdown={setRenderMarkdown}/> <Markdown>{notes}</Markdown> </div>
    }
 
-   return <textarea style={style} onChange={processNotes}/>
+   return <div style={containerStyle}> <NotepadSwitch setRenderMarkdown={setRenderMarkdown}/> <textarea value={notes} style={textareaStyle} onChange={processNotes}/> </div>
 };
 
 const getNotepadRoot = (notepadId: string) => {
@@ -54,7 +79,7 @@ const renderNotepad = (notepadId: string) => {
    document.body.appendChild(getNotepadRoot(notepadId));
    ReactDOM.render(
       <React.StrictMode>
-         <Notepad renderMarkdown={false}/>
+         <Notepad />
       </React.StrictMode>,
       document.getElementById(notepadId)
    );
