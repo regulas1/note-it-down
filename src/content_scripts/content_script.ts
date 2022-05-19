@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { resposne } from "../types/message";
-import { toggleNotepad } from "./notepad";
+import { toggleNotepad } from "./notepadHelpers";
 
 const notepadId = nanoid();
 
