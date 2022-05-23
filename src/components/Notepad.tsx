@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, useState } from "react";
 import Markdown from "markdown-to-jsx";
 import { NotepadSwitch } from "./NotepadSwitch";
-import { appendNoteOnActiveUrl, setSessionNote } from "../repository/localStorageRepository";
+import { setSessionNote } from "../repository/chromeStorageRepository";
 
 interface NotepadProps {
    scrollLocation: number

@@ -2,7 +2,7 @@ import React, { FormEventHandler } from "react";
 import ReactDOM from "react-dom";
 import { blurBodyExceptNotepad, unBlurBody } from "../modules/blurService";
 import { Notepad } from "../components/Notepad";
-import { appendNoteOnActiveUrl, getSessionNote } from "../repository/localStorageRepository";
+import { appendNoteOnActiveUrl, getSessionNote, resetSessionNote, setSessionNote } from "../repository/chromeStorageRepository";
 
 const getNotepadRoot = (notepadId: string) => {
    const notepadRoot = document.createElement("div");
@@ -25,13 +25,14 @@ const renderNotepad = (notepadId: string) => {
    );
 };
 
-const switchOffNotepad = (notepadElement: HTMLElement) => {
+const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
    const sessionNote = getSessionNote();
-   if (sessionNote) {
-      appendNoteOnActiveUrl(sessionNote.content, sessionNote.scrollLocation);
+   if (sessionNote?.content) {
+      await appendNoteOnActiveUrl(sessionNote.content, sessionNote.scrollLocation);
    }
    notepadElement.remove();
    unBlurBody();
+   resetSessionNote();
 }
 
 const switchOnNotepad = (notepadId: string) => {
@@ -39,10 +40,10 @@ const switchOnNotepad = (notepadId: string) => {
    blurBodyExceptNotepad(10, notepadId);
 }
 
-export const toggleNotepad = (notepadId: string) => {
+export const toggleNotepad = async (notepadId: string) => {
    const notepadElement = document.getElementById(notepadId);
    if (notepadElement) {
-      switchOffNotepad(notepadElement);
+      await switchOffNotepadAndSaveNote(notepadElement);
    } else {
       switchOnNotepad(notepadId);
    }
