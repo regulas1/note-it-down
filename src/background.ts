@@ -1,4 +1,6 @@
-import { request } from "./types/message";
+interface request {
+	command: string
+}
 
 chrome.commands.onCommand.addListener(async (command) => {
    if (command === "take-note") {

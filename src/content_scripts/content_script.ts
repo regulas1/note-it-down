@@ -1,8 +1,11 @@
 import { nanoid } from "nanoid";
-import { resposne } from "../types/message";
-import { toggleNotepad } from "./notepadHelpers";
+import { toggleNotepad } from "../modules/notepadService";
 
 const notepadId = nanoid();
+
+interface resposne {
+	code: number
+}
 
 type sendResponseType = (response: resposne) => void;
 

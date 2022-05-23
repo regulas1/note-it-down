@@ -1,7 +1,8 @@
 import React, { FormEventHandler } from "react";
 import ReactDOM from "react-dom";
-import { blurBodyExceptNotepad, unBlurBody } from "./blurHelpers";
+import { blurBodyExceptNotepad, unBlurBody } from "../modules/blurService";
 import { Notepad } from "../components/Notepad";
+import { appendNoteOnActiveUrl, getSessionNote } from "../repository/localStorageRepository";
 
 const getNotepadRoot = (notepadId: string) => {
    const notepadRoot = document.createElement("div");
@@ -18,19 +19,31 @@ const renderNotepad = (notepadId: string) => {
    document.body.appendChild(getNotepadRoot(notepadId));
    ReactDOM.render(
       <React.StrictMode>
-         <Notepad />
+         <Notepad scrollLocation={document.documentElement.scrollTop}/>
       </React.StrictMode>,
       document.getElementById(notepadId)
    );
 };
 
+const switchOffNotepad = (notepadElement: HTMLElement) => {
+   const sessionNote = getSessionNote();
+   if (sessionNote) {
+      appendNoteOnActiveUrl(sessionNote.content, sessionNote.scrollLocation);
+   }
+   notepadElement.remove();
+   unBlurBody();
+}
+
+const switchOnNotepad = (notepadId: string) => {
+   renderNotepad(notepadId);
+   blurBodyExceptNotepad(10, notepadId);
+}
+
 export const toggleNotepad = (notepadId: string) => {
    const notepadElement = document.getElementById(notepadId);
    if (notepadElement) {
-      notepadElement.remove();
-      unBlurBody();
+      switchOffNotepad(notepadElement);
    } else {
-      renderNotepad(notepadId);
-      blurBodyExceptNotepad(10, notepadId);
+      switchOnNotepad(notepadId);
    }
 };
