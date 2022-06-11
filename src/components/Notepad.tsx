@@ -1,8 +1,13 @@
 import React, { ChangeEventHandler, useState } from "react";
 import Markdown from "markdown-to-jsx";
 import { NotepadSwitch } from "./NotepadSwitch";
+import { setSessionNote } from "../repository/chromeStorageRepository";
 
-export const Notepad = () => {
+interface NotepadProps {
+   scrollLocation: number
+}
+
+export const Notepad = ({scrollLocation}: NotepadProps) => {
    const [notes, setNotes] = useState("");
    const [renderMarkdown, setRenderMarkdown] = useState(false);
 
@@ -36,8 +41,9 @@ export const Notepad = () => {
    };
 
    const processNotes: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-      const notes = event.target.value;
-      setNotes(notes);
+      const note = event.target.value;
+      setSessionNote(note, scrollLocation);
+      setNotes(note);
    };
    
    const markdownView = <Markdown>{notes}</Markdown>;
