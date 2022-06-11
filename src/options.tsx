@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { getAllNotes } from "./repository/chromeStorageRepository";
+import { allNotes, getAllNotes } from "./repository/chromeStorageRepository";
 
 const Options = () => {
-  const [notes, setNotes] = useState({});
+  const [notes, setNotes] = useState<allNotes>({});
 
   useEffect(() => {
     const getNotes = async () => {

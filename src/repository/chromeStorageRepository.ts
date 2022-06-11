@@ -3,7 +3,7 @@ interface note {
     scrollLocation: number
 }
 
-interface allNotes {
+export interface allNotes {
     [site: string]: note[]
 }
 
