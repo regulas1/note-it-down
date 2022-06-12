@@ -11,7 +11,6 @@ interface resposne {
 type sendResponseType = (response: resposne) => void;
 
 const executeBlurBody = async () => {
-   console.log(await getAllNotes());
    await toggleNotepad(notepadId);
 };
 

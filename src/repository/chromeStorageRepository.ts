@@ -1,4 +1,4 @@
-interface note {
+export interface note {
     content: string,
     scrollLocation: number
 }
@@ -37,7 +37,6 @@ const getNotesOnActiveUrl = async (): Promise<note[]> => {
 
 const setNotesOnActiveUrl = async (notes: note[]) => {
     const allNotes = await getAllNotes();
-    console.log("allnotes", allNotes);
     allNotes[getActiveUrl()] = notes;
     await setAllNotes(allNotes);
 }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { Notes } from "./components/Notes";
 import { allNotes, getAllNotes } from "./repository/chromeStorageRepository";
 
 const Options = () => {
-  const [notes, setNotes] = useState<allNotes>({});
+  const [allNotes, setNotes] = useState<allNotes>({});
 
   useEffect(() => {
     const getNotes = async () => {
@@ -11,12 +12,17 @@ const Options = () => {
     }
 
     getNotes();
+  }, []);
+
+  let key = 0;
+  const siteList = Object.entries(allNotes).map(([site, notes]) => {
+    key++;
+    return <Notes key={key} site={site} notes={notes}/>
   });
 
   return (
     <>
-      Hello:
-      {notes ? JSON.stringify(notes) : "no notes yet"}
+      {siteList}
     </>
   );
 };
