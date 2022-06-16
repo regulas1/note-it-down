@@ -2,7 +2,14 @@ import React, { FormEventHandler } from "react";
 import ReactDOM from "react-dom";
 import { blurBodyExceptNotepad, unBlurBody } from "../modules/blurService";
 import { Notepad } from "../components/Notepad";
-import { appendNoteOnActiveUrl, getSessionNote, resetSessionNote, setSessionNote } from "../repository/chromeStorageRepository";
+import { ChromeRepository } from "../repository/chromeStorageRepository";
+import { note } from "../repository/types";
+
+const repository = new ChromeRepository();
+
+const getActiveUrl = () => {
+   return window.location.href;
+}
 
 const getNotepadRoot = (notepadId: string) => {
    const notepadRoot = document.createElement("div");
@@ -15,20 +22,53 @@ const getNotepadRoot = (notepadId: string) => {
    return notepadRoot;
 };
 
+const getScrollLocation = () => {
+   return document.documentElement.scrollTop;
+}
+
+const setScrollLocation = (scrollLocation: number) => {
+   document.documentElement.scrollTop = scrollLocation;
+}
+
 const renderNotepad = (notepadId: string) => {
    document.body.appendChild(getNotepadRoot(notepadId));
    ReactDOM.render(
       <React.StrictMode>
-         <Notepad scrollLocation={document.documentElement.scrollTop}/>
+         <Notepad scrollLocation={getScrollLocation()}/>
       </React.StrictMode>,
       document.getElementById(notepadId)
    );
 };
 
+const getKeyForSessionNote = () => {
+   return "write-that-down-session-note";
+};
+
+const getSessionNote = (): note | null => {
+   const noteString = sessionStorage.getItem(getKeyForSessionNote());
+   if (noteString) {
+      return JSON.parse(noteString);
+   }
+   return null;
+};
+
+export const setSessionNote = (content: string, scrollLocation: number) => {
+   const note: note = {
+      content: content,
+      scrollLocation: scrollLocation,
+   };
+
+   sessionStorage.setItem(getKeyForSessionNote(), JSON.stringify(note));
+};
+
+export const resetSessionNote = () => {
+   setSessionNote("", 0);
+};
+
 const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
    const sessionNote = getSessionNote();
    if (sessionNote?.content) {
-      await appendNoteOnActiveUrl(sessionNote.content, sessionNote.scrollLocation);
+      await repository.addNoteToUrl(getActiveUrl(), sessionNote);
    }
    notepadElement.remove();
    unBlurBody();

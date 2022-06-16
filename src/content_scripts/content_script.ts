@@ -1,21 +1,18 @@
 import { nanoid } from "nanoid";
 import { toggleNotepad } from "../modules/notepadService";
-import { getAllNotes, setAllNotes } from "../repository/chromeStorageRepository";
+import { ChromeRepository } from "../repository/chromeStorageRepository";
+import { sendResponseType } from "./types";
 
 const notepadId = nanoid();
 
-interface resposne {
-   code: number;
-}
-
-type sendResponseType = (response: resposne) => void;
+const repository = new ChromeRepository();
 
 const executeBlurBody = async () => {
    await toggleNotepad(notepadId);
 };
 
 const executeClearAllData = async () => {
-	await setAllNotes({});	
+   await repository.setAllNotes({});
 }
 
 chrome.runtime.onMessage.addListener(

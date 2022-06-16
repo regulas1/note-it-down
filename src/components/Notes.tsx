@@ -1,5 +1,5 @@
 import React from "react"
-import { note } from "../repository/chromeStorageRepository"
+import { note } from "../repository/types"
 
 interface NotesProps {
    site: string,
