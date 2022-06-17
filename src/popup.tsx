@@ -2,14 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { getCurrentTab, request } from "./background";
 import "./styles/popup.css";
+import { Commands } from "./type";
 
 const Popup = () => {
    return (
-      <div style={{height: "30px", width: "30px", background: "red"}}>
+      <div>
          <button onClick={async() => {
             const tab = await getCurrentTab();
             chrome.tabs.sendMessage<request>(tab.id ? tab.id : -1, {
-               command: "blurBody",
+               command: Commands.takeNote,
             });
          }}>
             Hello
@@ -17,7 +18,7 @@ const Popup = () => {
          <button onClick={async () => {
             const tab = await getCurrentTab();
             chrome.tabs.sendMessage<request>(tab.id ? tab.id : -1, {
-               command: "clearAllData",
+               command: Commands.clearAllData,
             });
          }}>
             Clear

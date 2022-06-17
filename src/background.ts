@@ -1,12 +1,14 @@
+import { Commands } from "./type";
+
 export interface request {
 	command: string
 }
 
 chrome.commands.onCommand.addListener(async (command) => {
-   if (command === "take-note") {
+   if (command === Commands.takeNoteBackground) {
       const tab = await getCurrentTab();
       chrome.tabs.sendMessage<request>(tab.id ? tab.id : -1, {
-         command: "blurBody",
+         command: Commands.takeNote,
       });
    }
 });
