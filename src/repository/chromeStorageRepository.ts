@@ -14,7 +14,7 @@ export class ChromeRepository {
 
    public async getNotesOnUrl(url: string): Promise<note[]> {
       const allNotes = await this.getAllNotes();
-      return allNotes[url] || {};
+      return allNotes[url] || [];
    }
    
    public async addNoteToUrl(url: string, note: note): Promise<void> {
