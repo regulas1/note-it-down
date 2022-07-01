@@ -1,7 +1,7 @@
 {
-   "name": "infosnap-chrome",
+   "name": "write-that-down",
    "version": "1.0.0",
-   "description": "chrome extention for infosnap",
+   "description": "chrome extention to take easy notes on the browser",
    "main": "index.js",
    "scripts": {
       "watch": "webpack --config webpack/webpack.dev.js --watch",
@@ -14,7 +14,7 @@
    "license": "MIT",
    "repository": {
       "type": "git",
-      "url": "https://github.com/infosnap/chrome-extension"
+      "url": "https://github.com/hsingh124/write-that-down"
    },
    "dependencies": {
       "markdown-to-jsx": "^7.1.7",

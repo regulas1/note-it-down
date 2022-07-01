@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
 
-  "name": "infosnap-chrome",
-  "description": "chrome extension for infosnap",
+  "name": "write-that-down",
+  "description": "chrome extention to take easy notes on the browser",
   "version": "1.0",
 
   "options_page": "options.html",
