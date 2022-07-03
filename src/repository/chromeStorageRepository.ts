@@ -1,73 +1,31 @@
-interface note {
-    content: string,
-    scrollLocation: number
-}
+import { allNotes, note } from "./types";
 
-export interface allNotes {
-    [site: string]: note[]
-}
+export class ChromeRepository {
+   readonly keyForData = "write-that-down";
 
-const getActiveUrl = () => {
-    return window.location.href;
-}
+   public async getAllNotes(): Promise<allNotes> {
+      const notes = await chrome.storage.local.get([this.keyForData]);
+      return notes[this.keyForData] || {};
+   }
 
-const getKeyForData = () => {
-    return "write-that-down";
-}
+   public async setAllNotes(notes: allNotes): Promise<void> {
+      await chrome.storage.local.set({ [this.keyForData]: notes });
+   }
 
-const getKeyForSessionNote = () => {
-    return "write-that-down-session-note";
-}
+   public async getNotesOnUrl(url: string): Promise<note[]> {
+      const allNotes = await this.getAllNotes();
+      return allNotes[url] || [];
+   }
+   
+   public async addNoteToUrl(url: string, note: note): Promise<void> {
+      const notesOnUrl = await this.getNotesOnUrl(url);
+      notesOnUrl.push(note);
+      await this.setNotesOnUrl(url, notesOnUrl);
+   }
 
-export const appendNoteOnActiveUrl = async (content: string, scrollLocation: number) => {
-    const note:note = {
-        content: content,
-        scrollLocation: scrollLocation
-    }
-
-    const notesOnActiveUrl = await getNotesOnActiveUrl();
-    notesOnActiveUrl.push(note);
-    await setNotesOnActiveUrl(notesOnActiveUrl);
-}
-
-const getNotesOnActiveUrl = async (): Promise<note[]> => {
-    const allNotes = await getAllNotes();
-    return allNotes[getActiveUrl()] || [];
-};
-
-const setNotesOnActiveUrl = async (notes: note[]) => {
-    const allNotes = await getAllNotes();
-    console.log("allnotes", allNotes);
-    allNotes[getActiveUrl()] = notes;
-    await setAllNotes(allNotes);
-}
-
-export const getAllNotes = async (): Promise<allNotes> => {
-    const notes = await chrome.storage.local.get([getKeyForData()]);
-    return notes[getKeyForData()] || {};
-}
-
-export const setAllNotes = async (notes: allNotes) => {
-    await chrome.storage.local.set({[getKeyForData()]: notes});
-}
-
-export const setSessionNote = (content: string, scrollLocation: number) => {
-    const note:note = {
-        content: content,
-        scrollLocation: scrollLocation
-    }
-
-    sessionStorage.setItem(getKeyForSessionNote(), JSON.stringify(note));
-}
-
-export const resetSessionNote = () => {
-    setSessionNote("", 0);
-}
-
-export const getSessionNote = (): note | null => {
-    const noteString = sessionStorage.getItem(getKeyForSessionNote())
-    if (noteString) {
-        return JSON.parse(noteString);
-    }
-    return null;
+   protected async setNotesOnUrl(url: string, notes: note[]): Promise<void> {
+      const allNotes = await this.getAllNotes();
+      allNotes[url] = notes;
+      await this.setAllNotes(allNotes);
+   }
 }

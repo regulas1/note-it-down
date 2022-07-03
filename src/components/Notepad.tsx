@@ -1,7 +1,8 @@
 import React, { ChangeEventHandler, useState } from "react";
 import Markdown from "markdown-to-jsx";
 import { NotepadSwitch } from "./NotepadSwitch";
-import { setSessionNote } from "../repository/chromeStorageRepository";
+import { setSessionNote } from "../modules/notepadService";
+import ReactDOM from "react-dom";
 
 interface NotepadProps {
    scrollLocation: number
@@ -59,3 +60,9 @@ export const Notepad = ({scrollLocation}: NotepadProps) => {
       </div>
    );
 };
+
+// This is here for dev environment. Webpack compiles this and puts into devServe folder.
+// This JS is then executed to from notepad.html file.
+// Could in future put a conditional around this to check if this is the dev environment and only then have this.
+// It wouldn't matter though as this file is never executed but only the exported notepad component is used, so should be fine.
+ReactDOM.render(<Notepad scrollLocation={0} />, document.getElementById('notepad'));

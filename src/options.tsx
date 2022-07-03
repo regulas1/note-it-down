@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { allNotes, getAllNotes } from "./repository/chromeStorageRepository";
+import { Notes } from "./components/Notes";
+import { ChromeRepository } from "./repository/chromeStorageRepository";
+import { allNotes } from "./repository/types";
 
 const Options = () => {
-  const [notes, setNotes] = useState<allNotes>({});
+  const [allNotes, setNotes] = useState<allNotes>({});
+  const repository = new ChromeRepository();
 
   useEffect(() => {
     const getNotes = async () => {
-      setNotes(await getAllNotes());
+      setNotes(await repository.getAllNotes());
     }
 
     getNotes();
+  }, []);
+
+  let key = 0;
+  const siteList = Object.entries(allNotes).map(([site, notes]) => {
+    key++;
+    return <Notes key={key} site={site} notes={notes}/>
   });
 
   return (
     <>
-      Hello:
-      {notes ? JSON.stringify(notes) : "no notes yet"}
+      {siteList}
     </>
   );
 };

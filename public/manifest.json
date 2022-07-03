@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
 
-  "name": "infosnap-chrome",
-  "description": "chrome extension for infosnap",
+  "name": "write-that-down",
+  "description": "chrome extention to take easy notes on the browser",
   "version": "1.0",
 
   "options_page": "options.html",
@@ -26,8 +26,8 @@
   "commands": {
     "take-note": {
       "suggested_key": {
-        "default": "Ctrl+Shift+P",
-        "mac": "Command+Shift+P"
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
       },
       "description": "Take a note"
     }
