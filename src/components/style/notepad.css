@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700&display=swap');
+
+.notepad {
+   position: fixed;
+   top: 25vh;
+   right: 5vw;
+   background: #f9f9f9;
+   height: 35vh;
+   width: 30vh;
+   border-radius: 30px;
+   color: #383a42;
+   padding: 18px;
+   border: none;
+   outline: none;
+   overflow: auto;
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.notepad-text {
+   height: 100%;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: large;
+	background: inherit;
+   color: inherit;
+   border: none;
+   outline: none;
+   resize: none;
+}
