@@ -17,6 +17,7 @@ const getNotepadRoot = (notepadId: string) => {
    notepadRoot.style.left = "0";
    notepadRoot.style.height = "100%";
    notepadRoot.style.width = "100%";
+   notepadRoot.style.zIndex = "10000";
    notepadRoot.setAttribute("id", notepadId);
    return notepadRoot;
 };
