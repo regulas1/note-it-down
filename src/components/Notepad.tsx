@@ -21,7 +21,7 @@ export const Notepad = ({scrollLocation}: NotepadProps) => {
    
    const markdownView = <Markdown>{notes}</Markdown>;
 
-   const editorView = <textarea value={notes} className="notepad-text" onChange={processNotes} />
+   const editorView = <textarea autoFocus value={notes} id="notepad-text" onChange={processNotes} />
 
    const view = renderMarkdown ? markdownView : editorView;
 
