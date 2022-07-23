@@ -1,6 +1,5 @@
 import React, { FormEventHandler } from "react";
 import ReactDOM from "react-dom";
-import { blurBodyExceptNotepad, unBlurBody } from "../modules/blurService";
 import { Notepad } from "../components/Notepad";
 import { ChromeRepository } from "../repository/chromeStorageRepository";
 import { note } from "../repository/types";
@@ -71,13 +70,13 @@ const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
       await repository.addNoteToUrl(getActiveUrl(), sessionNote);
    }
    notepadElement.remove();
-   unBlurBody();
+   // unBlurBody();
    resetSessionNote();
 }
 
 const switchOnNotepad = (notepadId: string) => {
    renderNotepad(notepadId);
-   blurBodyExceptNotepad(10, notepadId);
+   // blurBodyExceptNotepad(10, notepadId);
 }
 
 export const toggleNotepad = async (notepadId: string) => {
