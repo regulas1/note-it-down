@@ -1,13 +1,29 @@
 import React from "react";
-import "./style/siteNavBar.css"
+import "./style/siteNavBar.css";
 
 interface sideNavBarProps {
-   siteTitles: string[]
+   siteMap: { [site: string]: string };
+   setActiveSiteFromTitle: (site: string) => void;
 }
 
-export const SiteNavBar = ({ siteTitles }: sideNavBarProps) => {
-   const siteElements = siteTitles.map((title) => {
-      return <div className="siteElement">{title}</div>;
+export const SiteNavBar = ({
+	siteMap,
+   setActiveSiteFromTitle,
+}: sideNavBarProps) => {
+   let key = 0;
+   const siteElements = Object.entries(siteMap).map(([site, title]) => {
+      key++;
+      return (
+         <div
+            key={key}
+            className="siteElement"
+            onClick={() => {
+               setActiveSiteFromTitle(site);
+            }}
+         >
+            {title}
+         </div>
+      );
    });
 
    return <div className="siteNavBarContainer">{siteElements}</div>;

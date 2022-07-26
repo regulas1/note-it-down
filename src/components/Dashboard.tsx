@@ -11,24 +11,28 @@ interface DashboardProps {
 }
 
 export const Dashboard = ({ allNotes }: DashboardProps) => {
-   let key = 0;
-   // const siteList = Object.entries(allNotes).map(([site, notes]) => {
-   //    key++;
-   //    return <Notes key={key} site={site} notes={notes} />;
-   // });
-	const siteMap: {[site: string]: string} = {}
+   const [activeSite, setActiveSite] = useState("");
+
+   const siteMap: { [site: string]: string } = {};
    Object.entries(allNotes).forEach(([site, notes]) => {
-		siteMap[site] = notes[0].pageTitle;
+      siteMap[site] = notes[0].pageTitle;
    });
 
-	const siteTitles = Object.keys(siteMap).map((site) => {
-		return siteMap[site];
-	});
+	let key = 0;
+   const activeNotes = allNotes[activeSite]?.map((note) => {
+		key++;
+      return <div key={key}>{note.content}</div>;
+   });
 
    return (
       <div className="dashboardContainer">
-         <SiteNavBar siteTitles={siteTitles}/>
-         <div>hello</div>
+         <SiteNavBar
+				setActiveSiteFromTitle={(site: string) => {
+               setActiveSite(site);
+            }}
+				siteMap={siteMap}	
+         />
+         <div>{activeNotes}</div>
       </div>
    );
 };
