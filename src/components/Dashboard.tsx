@@ -17,8 +17,8 @@ export const Dashboard = ({ allNotes }: DashboardProps) => {
    //    return <Notes key={key} site={site} notes={notes} />;
    // });
 
-   const sites = Object.entries(allNotes).map(([site]) => {
-		return site;
+   const sites = Object.entries(allNotes).map(([, notes]) => {
+		return notes[0].pageTitle;
    });
 
    return (

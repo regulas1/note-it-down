@@ -8,30 +8,36 @@ const dummyNotes: allNotes = {
       {
          content: "hello",
          scrollLocation: 10,
+         pageTitle: "title",
       },
       {
          content: "hello",
          scrollLocation: 10,
+         pageTitle: "title",
       },
    ],
    "site2.com": [
       {
          content: "hello",
          scrollLocation: 10,
+         pageTitle: "title",
       },
       {
          content: "hello",
          scrollLocation: 10,
+         pageTitle: "title",
       },
    ],
    "site3.com": [
       {
          content: "hello",
          scrollLocation: 10,
+         pageTitle: "title",
       },
       {
          content: "hello",
          scrollLocation: 10,
+         pageTitle: "title",
       },
    ],
 };

@@ -1,4 +1,5 @@
 export interface note {
+    pageTitle: string;
     content: string;
     scrollLocation: number;
 }
