@@ -2,13 +2,13 @@ import React from "react";
 import "./style/siteNavBar.css"
 
 interface sideNavBarProps {
-   sites: string[]
+   siteTitles: string[]
 }
 
-export const SiteNavBar = ({ sites }: sideNavBarProps) => {
-	const siteElements = sites.map((site) => {
-		return <div className="siteElement">{ site }</div>
-	})
+export const SiteNavBar = ({ siteTitles }: sideNavBarProps) => {
+   const siteElements = siteTitles.map((title) => {
+      return <div className="siteElement">{title}</div>;
+   });
 
-	return <div className="siteNavBarContainer">{siteElements}</div>;
-}
+   return <div className="siteNavBarContainer">{siteElements}</div>;
+};

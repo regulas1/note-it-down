@@ -16,14 +16,18 @@ export const Dashboard = ({ allNotes }: DashboardProps) => {
    //    key++;
    //    return <Notes key={key} site={site} notes={notes} />;
    // });
-
-   const sites = Object.entries(allNotes).map(([, notes]) => {
-		return notes[0].pageTitle;
+	const siteMap: {[site: string]: string} = {}
+   Object.entries(allNotes).forEach(([site, notes]) => {
+		siteMap[site] = notes[0].pageTitle;
    });
+
+	const siteTitles = Object.keys(siteMap).map((site) => {
+		return siteMap[site];
+	});
 
    return (
       <div className="dashboardContainer">
-         <SiteNavBar sites={sites}/>
+         <SiteNavBar siteTitles={siteTitles}/>
          <div>hello</div>
       </div>
    );
