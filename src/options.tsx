@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { Dashboard } from "./components/Dashboard";
 import { Notes } from "./components/Notes";
 import { ChromeRepository } from "./repository/chromeStorageRepository";
 import { allNotes } from "./repository/types";
@@ -16,15 +17,9 @@ const Options = () => {
     getNotes();
   }, []);
 
-  let key = 0;
-  const siteList = Object.entries(allNotes).map(([site, notes]) => {
-    key++;
-    return <Notes key={key} site={site} notes={notes}/>
-  });
-
   return (
     <>
-      {siteList}
+      <Dashboard allNotes={allNotes} />  
     </>
   );
 };

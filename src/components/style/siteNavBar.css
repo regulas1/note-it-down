@@ -1,0 +1,13 @@
+.siteNavBarContainer {
+	background: #16191e;
+   color: white;
+	padding: 30px 0px;
+}
+
+.siteElement {
+	padding: 5px 30px;
+}
+
+.siteElement:hover {
+	background-color: #22262e;
+}
