@@ -23,12 +23,15 @@ export const Dashboard = ({ allNotes }: DashboardProps) => {
    return (
       <div className="dashboardContainer">
          <SiteNavBar
-				setActiveSiteFromTitle={(site: string) => {
+            setActiveSiteFromTitle={(site: string) => {
                setActiveSite(site);
             }}
-				siteMap={siteMap}	
+            siteMap={siteMap}
          />
-         <NotesContainer notes={allNotes[activeSite]} />
+         <div className="infoPage">
+            <a href={activeSite}>{activeSite}</a>
+            <NotesContainer notes={allNotes[activeSite]} />
+         </div>
       </div>
    );
 };
