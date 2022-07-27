@@ -6,6 +6,7 @@
 
 .siteElement {
 	padding: 5px 30px;
+	cursor: pointer;
 }
 
 .siteElement.selected {

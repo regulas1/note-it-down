@@ -12,6 +12,8 @@ export const SiteNavBar = ({
 }: sideNavBarProps) => {
 	const [selectedTitle, setSelectedTitle] = useState(-1);
 
+   // TODO: move this peice of code into a separate function getSiteElements() and keep the
+   // variables that are being passed too deep in a shared state by using context.
    let key = -1;
    const siteElements = Object.entries(siteMap).map(([site, title]) => {
       key++;

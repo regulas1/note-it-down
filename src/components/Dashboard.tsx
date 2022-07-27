@@ -5,6 +5,8 @@ import { Notes } from "./Notes";
 import { allNotes } from "../repository/types";
 import "./style/dashboard.css";
 import { SiteNavBar } from "./SiteNavBar";
+import { NoteCard } from "./NoteCard";
+import { NotesContainer } from "./NotesContainer";
 
 interface DashboardProps {
    allNotes: allNotes;
@@ -18,12 +20,6 @@ export const Dashboard = ({ allNotes }: DashboardProps) => {
       siteMap[site] = notes[0].pageTitle;
    });
 
-	let key = 0;
-   const activeNotes = allNotes[activeSite]?.map((note) => {
-		key++;
-      return <div key={key} style={{whiteSpace: 'pre-wrap'}}>{note.content}</div>;
-   });
-
    return (
       <div className="dashboardContainer">
          <SiteNavBar
@@ -32,7 +28,7 @@ export const Dashboard = ({ allNotes }: DashboardProps) => {
             }}
 				siteMap={siteMap}	
          />
-         <div>{activeNotes}</div>
+         <NotesContainer notes={allNotes[activeSite]} />
       </div>
    );
 };
