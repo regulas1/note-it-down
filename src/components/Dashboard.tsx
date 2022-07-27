@@ -21,7 +21,7 @@ export const Dashboard = ({ allNotes }: DashboardProps) => {
 	let key = 0;
    const activeNotes = allNotes[activeSite]?.map((note) => {
 		key++;
-      return <div key={key}>{note.content}</div>;
+      return <div key={key} style={{whiteSpace: 'pre-wrap'}}>{note.content}</div>;
    });
 
    return (

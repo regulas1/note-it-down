@@ -8,6 +8,10 @@
 	padding: 5px 30px;
 }
 
+.siteElement.selected {
+	background: #31363d;
+}
+
 .siteElement:hover {
-	background-color: #31363d;
+	background-color: #2c3139;
 }

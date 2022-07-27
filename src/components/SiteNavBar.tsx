@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style/siteNavBar.css";
 
 interface sideNavBarProps {
@@ -7,17 +7,28 @@ interface sideNavBarProps {
 }
 
 export const SiteNavBar = ({
-	siteMap,
+   siteMap,
    setActiveSiteFromTitle,
 }: sideNavBarProps) => {
-   let key = 0;
+	const [selectedTitle, setSelectedTitle] = useState(-1);
+
+   let key = -1;
    const siteElements = Object.entries(siteMap).map(([site, title]) => {
       key++;
+      const titleKey = key
+
+      let className = "siteElement";
+
+      if (titleKey === selectedTitle) {
+         className += " selected";
+      }
+      
       return (
          <div
             key={key}
-            className="siteElement"
-            onClick={() => {
+            className={className}
+				onClick={() => {
+					setSelectedTitle(titleKey);
                setActiveSiteFromTitle(site);
             }}
          >
@@ -26,5 +37,5 @@ export const SiteNavBar = ({
       );
    });
 
-   return <div className="siteNavBarContainer">{siteElements}</div>;
+   return <div className="siteNavBarContainer" style={{}}>{siteElements}</div>;
 };
