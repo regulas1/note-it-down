@@ -9,6 +9,7 @@ module.exports = merge(common, {
    mode: "development",
    entry: {
       notepad: path.join(srcDir, "devJs", "notepad.tsx"),
+      dashboard: path.join(srcDir, "devJs", "dashboard.tsx")
    },
    output: {
       path: path.join(__dirname, "../devServeDist"),

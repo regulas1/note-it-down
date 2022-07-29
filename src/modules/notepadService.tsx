@@ -52,17 +52,16 @@ const getSessionNote = (): note | null => {
    return null;
 };
 
-export const setSessionNote = (content: string, scrollLocation: number) => {
-   const note: note = {
-      content: content,
-      scrollLocation: scrollLocation,
-   };
-
+export const setSessionNote = (note: note) => {
    sessionStorage.setItem(getKeyForSessionNote(), JSON.stringify(note));
 };
 
 export const resetSessionNote = () => {
-   setSessionNote("", 0);
+   setSessionNote({
+      pageTitle: "",
+      content: "",
+      scrollLocation: 0,
+   });
 };
 
 const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {

@@ -15,7 +15,11 @@ export const Notepad = ({scrollLocation}: NotepadProps) => {
 
    const processNotes: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
       const note = event.target.value;
-      setSessionNote(note, scrollLocation);
+      setSessionNote({
+         pageTitle: document.title,
+         content: note,
+         scrollLocation: scrollLocation
+      });
       setNotes(note);
    };
    
