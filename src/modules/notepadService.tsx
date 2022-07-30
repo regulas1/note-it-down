@@ -70,13 +70,11 @@ const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
       await repository.addNoteToUrl(getActiveUrl(), sessionNote);
    }
    notepadElement.remove();
-   // unBlurBody();
    resetSessionNote();
 }
 
 const switchOnNotepad = (notepadId: string) => {
    renderNotepad(notepadId);
-   // blurBodyExceptNotepad(10, notepadId);
 }
 
 export const toggleNotepad = async (notepadId: string) => {

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Dashboard } from "./components/Dashboard";
-import { Notes } from "./components/Notes";
 import { ChromeRepository } from "./repository/chromeStorageRepository";
 import { allNotes } from "./repository/types";
 

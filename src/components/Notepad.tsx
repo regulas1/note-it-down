@@ -1,7 +1,5 @@
 import React, { ChangeEventHandler, useState } from "react";
-import ReactDOM from "react-dom";
 import Markdown from "markdown-to-jsx";
-import { NotepadSwitch } from "./NotepadSwitch";
 import { setSessionNote } from "../modules/notepadService";
 import "./style/notepad.css"
 
@@ -31,7 +29,6 @@ export const Notepad = ({scrollLocation}: NotepadProps) => {
 
    return (
       <div className="notepad">
-         {/* <NotepadSwitch isMarkdownView={renderMarkdown} setRenderMarkdown={setRenderMarkdown} /> */}
          { view } 
       </div>
    );

@@ -1,11 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { ChromeRepository } from "../repository/chromeStorageRepository";
-import { Notes } from "./Notes";
 import { allNotes } from "../repository/types";
 import "./style/dashboard.css";
 import { SiteNavBar } from "./SiteNavBar";
-import { NoteCard } from "./NoteCard";
 import { NotesContainer } from "./NotesContainer";
 
 interface DashboardProps {
