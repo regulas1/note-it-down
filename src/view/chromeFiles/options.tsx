@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Dashboard } from "./components/Dashboard";
-import { ChromeRepository } from "./repository/chromeStorageRepository";
-import { allNotes } from "./repository/types";
+import { Dashboard } from "../components/Dashboard";
+import { ChromeRepository } from "../../repository/chromeStorageRepository";
+import { allNotes } from "../../repository/types";
 
 const Options = () => {
   const [allNotes, setNotes] = useState<allNotes>({});

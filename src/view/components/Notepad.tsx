@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useState } from "react";
 import Markdown from "markdown-to-jsx";
-import { setSessionNote } from "../modules/notepadService";
+import { setSessionNote } from "../helpers";
 import "./style/notepad.css"
 
 interface NotepadProps {

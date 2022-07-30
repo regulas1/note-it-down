@@ -1,8 +1,7 @@
 import { nanoid } from "nanoid";
-import { toggleNotepad } from "../modules/notepadService";
-import { ChromeRepository } from "../repository/chromeStorageRepository";
-import { Commands } from "../type";
-import { sendResponseType } from "./types";
+import { ChromeRepository } from "../../repository/chromeStorageRepository";
+import { Commands, sendResponseType } from "../types";
+import { toggleNotepad } from "../helpers";
 
 const notepadId = nanoid();
 

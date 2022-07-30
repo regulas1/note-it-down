@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { ChromeRepository } from "../repository/chromeStorageRepository";
-import { allNotes } from "../repository/types";
+import { ChromeRepository } from "../../repository/chromeStorageRepository";
+import { allNotes } from "../../repository/types";
 import "./style/dashboard.css";
 import { SiteNavBar } from "./SiteNavBar";
 import { NotesContainer } from "./NotesContainer";

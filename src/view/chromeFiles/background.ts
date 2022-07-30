@@ -1,4 +1,4 @@
-import { Commands } from "./type";
+import { Commands } from "../types";
 
 export interface request {
 	command: string

@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Commands } from "../types";
 import { getCurrentTab, request } from "./background";
 import "./styles/popup.css";
-import { Commands } from "./type";
 
 const Popup = () => {
    return (

@@ -1,6 +1,6 @@
 import React, { FormEventHandler } from "react";
 import ReactDOM from "react-dom";
-import { Notepad } from "../components/Notepad";
+import { Notepad } from "./components/Notepad";
 import { ChromeRepository } from "../repository/chromeStorageRepository";
 import { note } from "../repository/types";
 
@@ -8,7 +8,7 @@ const repository = new ChromeRepository();
 
 const getActiveUrl = () => {
    return window.location.href;
-}
+};
 
 const getNotepadRoot = (notepadId: string) => {
    const notepadRoot = document.createElement("div");
@@ -24,17 +24,17 @@ const getNotepadRoot = (notepadId: string) => {
 
 const getScrollLocation = () => {
    return document.documentElement.scrollTop;
-}
+};
 
 const setScrollLocation = (scrollLocation: number) => {
    document.documentElement.scrollTop = scrollLocation;
-}
+};
 
 const renderNotepad = (notepadId: string) => {
    document.body.appendChild(getNotepadRoot(notepadId));
    ReactDOM.render(
       <React.StrictMode>
-         <Notepad scrollLocation={getScrollLocation()}/>
+         <Notepad scrollLocation={getScrollLocation()} />
       </React.StrictMode>,
       document.getElementById(notepadId)
    );
@@ -71,11 +71,11 @@ const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
    }
    notepadElement.remove();
    resetSessionNote();
-}
+};
 
 const switchOnNotepad = (notepadId: string) => {
    renderNotepad(notepadId);
-}
+};
 
 export const toggleNotepad = async (notepadId: string) => {
    const notepadElement = document.getElementById(notepadId);
