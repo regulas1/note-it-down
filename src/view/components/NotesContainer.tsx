@@ -1,5 +1,5 @@
 import React from "react";
-import { note } from "../../repository/types";
+import { note } from "../../modules/types";
 import { NoteCard } from "./NoteCard";
 import "./style/notesContainer.css"
 

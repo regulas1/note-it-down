@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, useState } from "react";
 import ReactDOM from "react-dom";
 import { Dashboard } from "../../components/Dashboard";
-import { allNotes } from "../../../repository/types";
+import { allNotes } from "../../../modules/types";
 
 const dummyNotes: allNotes = {
    "site1.com": [

@@ -1,8 +1,8 @@
 import React, { FormEventHandler } from "react";
 import ReactDOM from "react-dom";
 import { Notepad } from "./components/Notepad";
-import { ChromeRepository } from "../repository/chromeStorageRepository";
-import { note } from "../repository/types";
+import { ChromeRepository } from "../modules/chromeStorageRepository";
+import { note } from "../modules/types";
 
 const repository = new ChromeRepository();
 

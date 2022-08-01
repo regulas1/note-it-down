@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { ChromeRepository } from "../../repository/chromeStorageRepository";
+import { ChromeRepository } from "../../modules/chromeStorageRepository";
 import { Commands, sendResponseType } from "../types";
 import { toggleNotepad } from "../helpers";
 
