@@ -1,5 +1,4 @@
 import React, { ChangeEventHandler, useState } from "react";
-import Markdown from "markdown-to-jsx";
 import { setSessionNote } from "../helpers";
 import "./style/notepad.css"
 
@@ -21,15 +20,11 @@ export const Notepad = ({scrollLocation}: NotepadProps) => {
       setNotes(note);
    };
    
-   const markdownView = <Markdown>{notes}</Markdown>;
-
-   const editorView = <textarea autoFocus value={notes} id="notepad-text" onChange={processNotes} />
-
-   const view = renderMarkdown ? markdownView : editorView;
+   const notepadTextArea = <textarea autoFocus value={notes} id="notepad-text" onChange={processNotes} />
 
    return (
       <div className="notepad">
-         { view } 
+         { notepadTextArea } 
       </div>
    );
 };
