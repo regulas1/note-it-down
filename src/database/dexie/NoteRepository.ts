@@ -8,7 +8,7 @@ export class NoteRepository extends DexieRepository<INote> {
         super(db.notes);
     }
 
-    async getAllFromUrlId(urlId: number) {
+    static async getAllFromSiteId(urlId: number) {
         return await db.notes.where(NoteColumns.SiteId).equals(urlId).toArray();
     }
 }

@@ -1,11 +1,32 @@
+import { Note } from "./Note";
+import { Site } from "./Site";
 import { allNotes, note } from "./types";
 
 export class ChromeRepository {
    readonly keyForData = "write-that-down";
 
    public async getAllNotes(): Promise<allNotes> {
-      const notes = await chrome.storage.local.get([this.keyForData]);
-      return notes[this.keyForData] || {};
+      var allNotes: allNotes = {};
+      const sites = await Site.getAllSites();
+      sites.forEach(async (site) => {
+         var notes: note[] = [];
+         if (site.id) {
+            const siteNotes = await Note.getNotesBySiteId(site.id);
+            siteNotes.forEach((siteNote) => {
+               notes.push({
+                  pageTitle: site.title,
+                  content: siteNote.note,
+                  scrollLocation: siteNote.scroll
+               });
+            })
+            allNotes[site.url] = notes
+         }
+      })
+
+      console.log("all Notes: ", allNotes)
+      return allNotes;
+      // const notes = await chrome.storage.local.get([this.keyForData]);
+      // return notes[this.keyForData] || {};
    }
 
    public async setAllNotes(notes: allNotes): Promise<void> {

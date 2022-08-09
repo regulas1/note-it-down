@@ -8,11 +8,14 @@ const Options = () => {
   const [allNotes, setNotes] = useState<allNotes>({});
   const repository = new ChromeRepository();
 
-  useEffect(() => {
-    const getNotes = async () => {
-      setNotes(await repository.getAllNotes());
-    }
+  const getNotes = async () => {
+    const notes = await repository.getAllNotes();
+    setNotes(notes);
+    console.log("notes: ", notes)
+    console.log("allNotes: ", allNotes)
+  }
 
+  useEffect(() => {
     getNotes();
   }, []);
 

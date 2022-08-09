@@ -12,7 +12,7 @@ export class SiteRepository extends DexieRepository<ISite> {
         return await db.sites.where(SiteColumns.Url).equals(url).first();
     }
 
-    async getAll(): Promise<ISite[]> {
+    static async getAll(): Promise<ISite[]> {
         return await db.sites.toArray();
     }
 }
