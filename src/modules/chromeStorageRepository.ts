@@ -23,7 +23,6 @@ export class ChromeRepository {
          }
       })
 
-      console.log("all Notes: ", allNotes)
       return allNotes;
       // const notes = await chrome.storage.local.get([this.keyForData]);
       // return notes[this.keyForData] || {};

@@ -11,8 +11,6 @@ const Options = () => {
   const getNotes = async () => {
     const notes = await repository.getAllNotes();
     setNotes(notes);
-    console.log("notes: ", notes)
-    console.log("allNotes: ", allNotes)
   }
 
   useEffect(() => {

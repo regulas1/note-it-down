@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { ISite } from "../../database/types";
 import "./style/siteNavBar.css";
 
 interface sideNavBarProps {
-   siteMap: { [site: string]: string };
-   setActiveSiteFromTitle: (site: string) => void;
+   siteMap: ISite[];
+   setActiveSiteFromTitle: (siteId: number) => void;
 }
 
 export const SiteNavBar = ({
@@ -15,7 +16,7 @@ export const SiteNavBar = ({
    // TODO: move this peice of code into a separate function getSiteElements() and keep the
    // variables that are being passed too deep in a shared state by using context.
    let key = -1;
-   const siteElements = Object.entries(siteMap).map(([site, title]) => {
+   const siteElements = siteMap.map((site) => {
       key++;
       const titleKey = key
 
@@ -31,10 +32,14 @@ export const SiteNavBar = ({
             className={className}
 				onClick={() => {
 					setSelectedTitle(titleKey);
-               setActiveSiteFromTitle(site);
+               if (site.id) {
+                  setActiveSiteFromTitle(site.id);
+               } else {
+                  throw new Error("Title does not have a site id");
+               }
             }}
          >
-            {title}
+            {site.title}
          </div>
       );
    });
