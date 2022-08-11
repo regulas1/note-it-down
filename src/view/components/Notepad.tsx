@@ -8,7 +8,6 @@ interface NotepadProps {
 
 export const Notepad = ({scrollLocation}: NotepadProps) => {
    const [notes, setNotes] = useState("");
-   const [renderMarkdown, setRenderMarkdown] = useState(false);
 
    const processNotes: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
       const note = event.target.value;

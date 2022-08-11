@@ -1,4 +1,4 @@
-import { UpdatedNote, UpdatedSite, UpdatedTableObject } from "./types"
+import { UpdatedTableObject } from "./types"
 
 export interface IRepository<T> {
     getById(id: number): T | Promise<T>

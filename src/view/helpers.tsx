@@ -1,10 +1,9 @@
-import React, { FormEventHandler } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Notepad } from "./components/Notepad";
-import { ChromeRepository } from "../modules/chromeStorageRepository";
 import { note } from "../modules/types";
-
-const repository = new ChromeRepository();
+import { INote, ISite } from "../database/types";
+import { Commands } from "./types";
 
 const getActiveUrl = () => {
    return window.location.href;
@@ -67,7 +66,26 @@ export const resetSessionNote = () => {
 const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
    const sessionNote = getSessionNote();
    if (sessionNote?.content) {
-      await repository.addNoteToUrl(getActiveUrl(), sessionNote);
+      // const site = new Site(getActiveUrl(), sessionNote.pageTitle);
+      // const note = new Note(sessionNote.content, sessionNote.scrollLocation);
+      // note.addToSite(site);
+      const site: ISite = {
+         url: getActiveUrl(),
+         title: sessionNote.pageTitle
+      }
+      const note: INote = {
+         note: sessionNote.content,
+         scroll: sessionNote.scrollLocation,
+         siteId: null
+      }
+      chrome.runtime.sendMessage({
+         command: Commands.takeNote,
+         site: site,
+         note: note
+      }, (res) => {
+         console.log(res);
+      });
+      // await repository.addNoteToUrl(getActiveUrl(), sessionNote);
    }
    notepadElement.remove();
    resetSessionNote();

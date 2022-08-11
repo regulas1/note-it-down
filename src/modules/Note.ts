@@ -1,8 +1,8 @@
 import { NoteRepository } from "../database/dexie/NoteRepository";
-import { INote, ISite } from "../database/types";
+import { INote } from "../database/types";
 import { Site } from "./Site";
 
-class Note implements INote {
+export class Note {
     id?: number;
     note: string;
     siteId: number | null;
@@ -10,14 +10,14 @@ class Note implements INote {
 
     private readonly noteRepository = new NoteRepository();
 
-    private constructor(note: string, siteId: number | null = null, scroll: number) {
+    constructor(note: string, scroll: number, siteId: number | null = null) {
         this.note = note;
-        this.siteId = siteId;
         this.scroll = scroll;
+        this.siteId = siteId;
     }
 
-    async getNotesByUrlId(urlId: number) {
-        return await this.noteRepository.getAllFromUrlId(urlId);
+    static async getNotesBySiteId(siteId: number): Promise<INote[]> {
+        return await NoteRepository.getAllFromSiteId(siteId);
     }
 
     async addToSite(site: Site) {
@@ -27,6 +27,10 @@ class Note implements INote {
     }
 
     async saveAndSetId(): Promise<void> {
-        this.id = await this.noteRepository.insertAndGetId(this);
+        this.id = await this.noteRepository.insertAndGetId({
+            note: this.note,
+            siteId: this.siteId,
+            scroll: this.scroll
+        });
     }
 }

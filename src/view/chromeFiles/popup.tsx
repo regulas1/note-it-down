@@ -10,18 +10,10 @@ const Popup = () => {
          <button onClick={async() => {
             const tab = await getCurrentTab();
             chrome.tabs.sendMessage<request>(tab.id ? tab.id : -1, {
-               command: Commands.takeNote,
+               command: Commands.toggelNotepad,
             });
          }}>
-            Hello
-         </button>
-         <button onClick={async () => {
-            const tab = await getCurrentTab();
-            chrome.tabs.sendMessage<request>(tab.id ? tab.id : -1, {
-               command: Commands.clearAllData,
-            });
-         }}>
-            Clear
+            Take Note
          </button>
       </div>
    );

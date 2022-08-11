@@ -1,7 +1,7 @@
 import { SiteRepository } from "../database/dexie/SiteRepository";
 import { ISite } from "../database/types";
 
-export class Site implements ISite {
+export class Site {
     id?: number;
     url: string;
     title: string;
@@ -17,8 +17,8 @@ export class Site implements ISite {
         this.id = id;
     }
 
-    async getAllSites(): Promise<ISite[]> {
-        return await this.siteRepository.getAll();
+    static async getAllSites(): Promise<ISite[]> {
+        return await SiteRepository.getAll();
     }
 
     async addNewSiteAndGetId(): Promise<number> {
@@ -29,7 +29,11 @@ export class Site implements ISite {
             return existingSite.id;
         }
 
-        const newSiteId = await this.siteRepository.insertAndGetId(this);
+        const newSiteId = await this.siteRepository.insertAndGetId({
+            url: this.url,
+            title: this.title
+        });
+        
         this.setId(newSiteId);
 
         return newSiteId;

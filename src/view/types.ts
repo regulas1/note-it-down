@@ -1,7 +1,9 @@
+// TODO: update these command names, specially take note
+// it should be toggle notepad or something
 export enum Commands {
-   takeNote = "takeNote",
+   toggelNotepad = "takeNote",
    takeNoteBackground = "take-note",
-   clearAllData = "clearAllData",
+   takeNote = "saveNote"
 }
 
 interface resposne {

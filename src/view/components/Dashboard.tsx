@@ -1,34 +1,52 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { ChromeRepository } from "../../modules/chromeStorageRepository";
-import { allNotes } from "../../modules/types";
 import "./style/dashboard.css";
 import { SiteNavBar } from "./SiteNavBar";
 import { NotesContainer } from "./NotesContainer";
+import { Site } from "../../modules/Site";
+import { INote, ISite } from "../../database/types";
+import { Note } from "../../modules/Note";
 
-interface DashboardProps {
-   allNotes: allNotes;
-}
+export const Dashboard = () => {
+   const [activeSite, setActiveSite] = useState<ISite|null>(null);
+   const [activeNotes, setActiveNotes] = useState<INote[]>([]);
+   const [allSites, setAllSites] = useState<ISite[]>([]);
 
-export const Dashboard = ({ allNotes }: DashboardProps) => {
-   const [activeSite, setActiveSite] = useState("");
+   // TODO: make a custom hook
+   useEffect(() => {
+      const getAllSites = async () => {
+         setAllSites(await Site.getAllSites());
+      }
 
-   const siteMap: { [site: string]: string } = {};
-   Object.entries(allNotes).forEach(([site, notes]) => {
-      siteMap[site] = notes[0].pageTitle;
-   });
+      const setNotesFromActiveSite = async () => {
+         if (activeSite !== null && activeSite.id) {
+            setActiveNotes(await Note.getNotesBySiteId(activeSite.id)); 
+         }
+      }
+
+      getAllSites();
+      setNotesFromActiveSite();
+   }, [activeSite]);
+
+   if (allSites.length < 1) {
+      return (
+         <div>
+            no sites to display
+         </div>
+      )
+   }
 
    return (
       <div className="dashboardContainer">
          <SiteNavBar
-            setActiveSiteFromTitle={(site: string) => {
+            setActiveSiteFromTitle={(site: ISite) => {
                setActiveSite(site);
             }}
-            siteMap={siteMap}
+            allSites={allSites}
          />
          <div className="infoPage">
-            <a href={activeSite}>{activeSite}</a>
-            <NotesContainer notes={allNotes[activeSite]} />
+            <a href={activeSite?.url}>{activeSite?.url}</a>
+            <NotesContainer notes={activeNotes} />
          </div>
       </div>
    );
