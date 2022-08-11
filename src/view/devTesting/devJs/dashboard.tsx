@@ -239,6 +239,6 @@ const dummyNotes: allNotes = {
 };
 
 ReactDOM.render(
-   <Dashboard allNotes={dummyNotes}/>,
+   <Dashboard />,
    document.getElementById("dashboard")
 );

@@ -11,7 +11,7 @@ chrome.commands.onCommand.addListener(async (command) => {
    if (command === Commands.takeNoteBackground) {
       const tab = await getCurrentTab();
       chrome.tabs.sendMessage<request>(tab.id ? tab.id : -1, {
-         command: Commands.takeNote,
+         command: Commands.toggelNotepad,
       });
    }
 });
@@ -19,7 +19,7 @@ chrome.commands.onCommand.addListener(async (command) => {
 chrome.runtime.onMessage.addListener(
    (request, _sender, sendResponse: sendResponseType) => {
       switch (request.command) {
-         case Commands.saveNote: {
+         case Commands.takeNote: {
             const site: ISite = request.site;
             const note: INote = request.note;
             const siteObj = new Site(site.url, site.title);

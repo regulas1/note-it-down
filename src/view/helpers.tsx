@@ -1,14 +1,11 @@
 import React, { FormEventHandler } from "react";
 import ReactDOM from "react-dom";
 import { Notepad } from "./components/Notepad";
-import { ChromeRepository } from "../modules/chromeStorageRepository";
 import { note } from "../modules/types";
 import { Note } from "../modules/Note";
 import { Site } from "../modules/Site";
 import { INote, ISite } from "../database/types";
 import { Commands } from "./types";
-
-const repository = new ChromeRepository();
 
 const getActiveUrl = () => {
    return window.location.href;
@@ -84,7 +81,7 @@ const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
          siteId: null
       }
       chrome.runtime.sendMessage({
-         command: Commands.saveNote,
+         command: Commands.takeNote,
          site: site,
          note: note
       }, (res) => {

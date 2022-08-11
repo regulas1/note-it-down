@@ -3,12 +3,12 @@ import { ISite } from "../../database/types";
 import "./style/siteNavBar.css";
 
 interface sideNavBarProps {
-   siteMap: ISite[];
-   setActiveSiteFromTitle: (siteId: number) => void;
+   allSites: ISite[];
+   setActiveSiteFromTitle: (site: ISite) => void;
 }
 
 export const SiteNavBar = ({
-   siteMap,
+   allSites,
    setActiveSiteFromTitle,
 }: sideNavBarProps) => {
 	const [selectedTitle, setSelectedTitle] = useState(-1);
@@ -16,7 +16,7 @@ export const SiteNavBar = ({
    // TODO: move this peice of code into a separate function getSiteElements() and keep the
    // variables that are being passed too deep in a shared state by using context.
    let key = -1;
-   const siteElements = siteMap.map((site) => {
+   const siteElements = allSites.map((site) => {
       key++;
       const titleKey = key
 
@@ -32,10 +32,10 @@ export const SiteNavBar = ({
             className={className}
 				onClick={() => {
 					setSelectedTitle(titleKey);
-               if (site.id) {
-                  setActiveSiteFromTitle(site.id);
+               if (site) {
+                  setActiveSiteFromTitle(site);
                } else {
-                  throw new Error("Title does not have a site id");
+                  throw new Error("Site is undefined");
                }
             }}
          >

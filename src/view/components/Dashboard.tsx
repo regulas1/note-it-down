@@ -1,7 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { ChromeRepository } from "../../modules/chromeStorageRepository";
-import { allNotes } from "../../modules/types";
 import "./style/dashboard.css";
 import { SiteNavBar } from "./SiteNavBar";
 import { NotesContainer } from "./NotesContainer";
@@ -9,42 +7,26 @@ import { Site } from "../../modules/Site";
 import { INote, ISite } from "../../database/types";
 import { Note } from "../../modules/Note";
 
-interface DashboardProps {
-   allNotes: allNotes;
-}
-
-export const Dashboard = ({ allNotes }: DashboardProps) => {
-   const [activeSiteId, setActiveSiteId] = useState(-1);
+export const Dashboard = () => {
+   const [activeSite, setActiveSite] = useState<ISite|null>(null);
    const [activeNotes, setActiveNotes] = useState<INote[]>([]);
    const [allSites, setAllSites] = useState<ISite[]>([]);
 
+   // TODO: make a custom hook
    useEffect(() => {
       const getAllSites = async () => {
          setAllSites(await Site.getAllSites());
       }
 
       const setNotesFromActiveSite = async () => {
-         if (activeSiteId !== -1) {
-            setActiveNotes(await Note.getNotesBySiteId(activeSiteId)); 
+         if (activeSite !== null && activeSite.id) {
+            setActiveNotes(await Note.getNotesBySiteId(activeSite.id)); 
          }
       }
 
-      console.log("I am in the dashboard useeffect")
-
       getAllSites();
       setNotesFromActiveSite();
-   }, [activeSiteId]);
-
-   const getActiveUrl = (): string => {
-      const site = allSites.filter(site => site.id === activeSiteId);
-      console.log("this is the site", site)
-      if (site.length < 1) {
-         return "";
-      }
-      return site[0].url;
-   }
-
-   console.log(allSites);
+   }, [activeSite]);
 
    if (allSites.length < 1) {
       return (
@@ -57,13 +39,13 @@ export const Dashboard = ({ allNotes }: DashboardProps) => {
    return (
       <div className="dashboardContainer">
          <SiteNavBar
-            setActiveSiteFromTitle={(siteId: number) => {
-               setActiveSiteId(siteId);
+            setActiveSiteFromTitle={(site: ISite) => {
+               setActiveSite(site);
             }}
-            siteMap={allSites}
+            allSites={allSites}
          />
          <div className="infoPage">
-            <a href={getActiveUrl()}>{getActiveUrl()}</a>
+            <a href={activeSite?.url}>{activeSite?.url}</a>
             <NotesContainer notes={activeNotes} />
          </div>
       </div>
