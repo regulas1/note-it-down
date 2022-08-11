@@ -1,6 +1,5 @@
 import React from "react";
 import { INote } from "../../database/types";
-import { note } from "../../modules/types";
 import { NoteCard } from "./NoteCard";
 import "./style/notesContainer.css"
 

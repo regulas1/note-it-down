@@ -1,9 +1,7 @@
-import React, { FormEventHandler } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Notepad } from "./components/Notepad";
 import { note } from "../modules/types";
-import { Note } from "../modules/Note";
-import { Site } from "../modules/Site";
 import { INote, ISite } from "../database/types";
 import { Commands } from "./types";
 

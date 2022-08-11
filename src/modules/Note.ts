@@ -1,5 +1,5 @@
 import { NoteRepository } from "../database/dexie/NoteRepository";
-import { INote, ISite } from "../database/types";
+import { INote } from "../database/types";
 import { Site } from "./Site";
 
 export class Note {
