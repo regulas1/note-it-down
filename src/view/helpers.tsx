@@ -1,14 +1,13 @@
-import React, { FormEventHandler } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import { Notepad } from "../components/Notepad";
-import { ChromeRepository } from "../repository/chromeStorageRepository";
-import { note } from "../repository/types";
-
-const repository = new ChromeRepository();
+import { Notepad } from "./components/Notepad";
+import { note } from "../modules/types";
+import { INote, ISite } from "../database/types";
+import { Commands } from "./types";
 
 const getActiveUrl = () => {
    return window.location.href;
-}
+};
 
 const getNotepadRoot = (notepadId: string) => {
    const notepadRoot = document.createElement("div");
@@ -24,17 +23,17 @@ const getNotepadRoot = (notepadId: string) => {
 
 const getScrollLocation = () => {
    return document.documentElement.scrollTop;
-}
+};
 
 const setScrollLocation = (scrollLocation: number) => {
    document.documentElement.scrollTop = scrollLocation;
-}
+};
 
 const renderNotepad = (notepadId: string) => {
    document.body.appendChild(getNotepadRoot(notepadId));
    ReactDOM.render(
       <React.StrictMode>
-         <Notepad scrollLocation={getScrollLocation()}/>
+         <Notepad scrollLocation={getScrollLocation()} />
       </React.StrictMode>,
       document.getElementById(notepadId)
    );
@@ -67,17 +66,34 @@ export const resetSessionNote = () => {
 const switchOffNotepadAndSaveNote = async (notepadElement: HTMLElement) => {
    const sessionNote = getSessionNote();
    if (sessionNote?.content) {
-      await repository.addNoteToUrl(getActiveUrl(), sessionNote);
+      // const site = new Site(getActiveUrl(), sessionNote.pageTitle);
+      // const note = new Note(sessionNote.content, sessionNote.scrollLocation);
+      // note.addToSite(site);
+      const site: ISite = {
+         url: getActiveUrl(),
+         title: sessionNote.pageTitle
+      }
+      const note: INote = {
+         note: sessionNote.content,
+         scroll: sessionNote.scrollLocation,
+         siteId: null
+      }
+      chrome.runtime.sendMessage({
+         command: Commands.takeNote,
+         site: site,
+         note: note
+      }, (res) => {
+         console.log(res);
+      });
+      // await repository.addNoteToUrl(getActiveUrl(), sessionNote);
    }
    notepadElement.remove();
-   // unBlurBody();
    resetSessionNote();
-}
+};
 
 const switchOnNotepad = (notepadId: string) => {
    renderNotepad(notepadId);
-   // blurBodyExceptNotepad(10, notepadId);
-}
+};
 
 export const toggleNotepad = async (notepadId: string) => {
    const notepadElement = document.getElementById(notepadId);

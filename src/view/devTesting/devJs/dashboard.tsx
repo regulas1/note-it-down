@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, useState } from "react";
 import ReactDOM from "react-dom";
-import { Dashboard } from "../components/Dashboard";
-import { allNotes } from "../repository/types";
+import { Dashboard } from "../../components/Dashboard";
+import { allNotes } from "../../../modules/types";
 
 const dummyNotes: allNotes = {
    "site1.com": [
@@ -239,6 +239,6 @@ const dummyNotes: allNotes = {
 };
 
 ReactDOM.render(
-   <Dashboard allNotes={dummyNotes}/>,
+   <Dashboard />,
    document.getElementById("dashboard")
 );

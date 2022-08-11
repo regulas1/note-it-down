@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { ISite } from "../../database/types";
 import "./style/siteNavBar.css";
 
 interface sideNavBarProps {
-   siteMap: { [site: string]: string };
-   setActiveSiteFromTitle: (site: string) => void;
+   allSites: ISite[];
+   setActiveSiteFromTitle: (site: ISite) => void;
 }
 
 export const SiteNavBar = ({
-   siteMap,
+   allSites,
    setActiveSiteFromTitle,
 }: sideNavBarProps) => {
 	const [selectedTitle, setSelectedTitle] = useState(-1);
@@ -15,7 +16,7 @@ export const SiteNavBar = ({
    // TODO: move this peice of code into a separate function getSiteElements() and keep the
    // variables that are being passed too deep in a shared state by using context.
    let key = -1;
-   const siteElements = Object.entries(siteMap).map(([site, title]) => {
+   const siteElements = allSites.map((site) => {
       key++;
       const titleKey = key
 
@@ -31,10 +32,14 @@ export const SiteNavBar = ({
             className={className}
 				onClick={() => {
 					setSelectedTitle(titleKey);
-               setActiveSiteFromTitle(site);
+               if (site) {
+                  setActiveSiteFromTitle(site);
+               } else {
+                  throw new Error("Site is undefined");
+               }
             }}
          >
-            {title}
+            {site.title}
          </div>
       );
    });
